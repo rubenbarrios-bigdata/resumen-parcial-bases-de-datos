@@ -48,7 +48,7 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 860px;
       width: 100%;
       margin: 0 auto;
       box-sizing: border-box;
@@ -56,7 +56,7 @@
 
     header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.25rem;
       position: relative;
     }
 
@@ -66,30 +66,32 @@
       color: #818cf8;
       padding: 0.35rem 1rem;
       border-radius: 9999px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
       border: 1px solid rgba(99, 102, 241, 0.3);
     }
 
     h1 {
-      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-size: clamp(1.65rem, 5vw, 2.35rem);
       font-weight: 700;
-      line-height: 1.2;
-      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      line-height: 1.25;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 0.75rem;
+      text-wrap: balance;
     }
 
     .subtitle {
       color: var(--text-muted);
-      font-size: clamp(0.92rem, 3vw, 1.08rem);
-      max-width: 620px;
+      font-size: clamp(0.92rem, 2.5vw, 1.05rem);
+      max-width: 600px;
       margin: 0 auto;
       line-height: 1.5;
+      text-wrap: pretty;
     }
 
     /* Master Player Bar */
@@ -98,8 +100,8 @@
       backdrop-filter: blur(16px);
       border: 1px solid var(--border-color);
       border-radius: 16px;
-      padding: 1.25rem;
-      margin-bottom: 1.75rem;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
@@ -113,7 +115,6 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 1.25rem 1.75rem;
       }
     }
 
@@ -121,11 +122,11 @@
       color: #fff;
       display: block;
       font-size: 1rem;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
 
     .master-info p {
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
       line-height: 1.35;
     }
@@ -133,7 +134,7 @@
     .speed-selector-container {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.45rem;
       width: 100%;
       box-sizing: border-box;
     }
@@ -201,29 +202,48 @@
       box-shadow: 0 0 12px var(--accent-glow);
     }
 
+    /* Tips Box */
     .tips-box {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(6, 182, 212, 0.08));
-      border: 1px solid rgba(99, 102, 241, 0.25);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.09), rgba(6, 182, 212, 0.09));
+      border: 1px solid rgba(99, 102, 241, 0.28);
       border-radius: 14px;
-      padding: 1rem 1.25rem;
+      padding: 1.15rem 1.25rem;
       margin-bottom: 2rem;
-      font-size: 0.92rem;
-      display: flex;
-      gap: 0.85rem;
-      align-items: flex-start;
       box-sizing: border-box;
       width: 100%;
     }
 
-    .tips-box-icon {
-      font-size: 1.35rem;
-      line-height: 1.2;
-      flex-shrink: 0;
+    .tips-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.45rem;
     }
 
-    .tips-box div {
-      flex: 1;
-      line-height: 1.5;
+    .tips-header strong {
+      color: #fff;
+      font-size: 0.96rem;
+    }
+
+    .tips-box-icon {
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .tips-text {
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .tips-text strong {
+      color: #fff;
+    }
+
+    .tips-text em {
+      color: #a5b4fc;
+      font-style: normal;
+      font-weight: 500;
     }
 
     /* Track List */
@@ -276,7 +296,7 @@
     }
 
     .track-num {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--accent-secondary);
@@ -289,13 +309,14 @@
       font-weight: 600;
       color: #fff;
       line-height: 1.35;
+      text-wrap: balance;
     }
 
     .track-summary {
       color: var(--text-muted);
       font-size: 0.92rem;
       margin-bottom: 1.15rem;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     .bullets {
@@ -384,6 +405,7 @@
       margin-top: 3.5rem;
       color: var(--text-muted);
       font-size: 0.88rem;
+      line-height: 1.5;
     }
 
     /* =========================================
@@ -395,7 +417,7 @@
       }
 
       header {
-        margin-bottom: 1.25rem;
+        margin-bottom: 1.35rem;
       }
 
       .badge {
@@ -404,11 +426,20 @@
         margin-bottom: 0.65rem;
       }
 
+      h1 {
+        font-size: 1.55rem;
+        line-height: 1.25;
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
+      }
+
       /* Sticky Mobile Controls Bar */
       .master-controls {
         padding: 0.95rem 1rem;
         border-radius: 14px;
-        gap: 0.75rem;
+        gap: 0.65rem;
         position: sticky;
         top: 0.5rem;
         z-index: 100;
@@ -427,7 +458,7 @@
       }
 
       .speed-selector-container {
-        gap: 0.45rem;
+        gap: 0.4rem;
       }
 
       .speed-label {
@@ -445,14 +476,18 @@
       }
 
       .tips-box {
-        padding: 0.85rem 1rem;
-        font-size: 0.85rem;
-        margin-bottom: 1.25rem;
-        gap: 0.65rem;
+        padding: 1rem;
+        border-radius: 14px;
+        margin-bottom: 1.35rem;
       }
 
-      .tips-box-icon {
-        font-size: 1.2rem;
+      .tips-header strong {
+        font-size: 0.92rem;
+      }
+
+      .tips-text {
+        font-size: 0.85rem;
+        line-height: 1.5;
       }
 
       /* Mobile Track Cards */
@@ -504,8 +539,8 @@
   <div class="container">
     <header>
       <div class="badge">Audio-Guía de Repaso</div>
-      <h1>Administración y Gestión de BD</h1>
-      <p class="subtitle">Audios narrados con voz profesional (Álvaro Neural) para escuchar y preparar el Primer Parcial.</p>
+      <h1>Administración y Gestión<br>de Bases de Datos</h1>
+      <p class="subtitle">Audio-resumen narrado para estudiar y preparar el Primer Parcial.</p>
     </header>
 
     <div class="master-controls">
@@ -525,10 +560,13 @@
     </div>
 
     <div class="tips-box">
-      <div class="tips-box-icon">💡</div>
-      <div>
-        <strong>Tip para el examen:</strong> Puedes escuchar el <em>Repaso Completo</em> para fijar los conceptos generales de corrido, o escuchar cada tema específico para profundizar en <em>Normalización</em>, <em>Cardinalidades N:M</em> y sintaxis <em>CREATE TABLE</em>.
+      <div class="tips-header">
+        <span class="tips-box-icon">💡</span>
+        <strong>Tip clave para el examen</strong>
       </div>
+      <p class="tips-text">
+        Puedes escuchar el <strong>Repaso Completo</strong> para fijar los conceptos generales de corrido, o escuchar cada tema específico para profundizar en <em>Normalización</em>, <em>Cardinalidades N:M</em> y sintaxis <em>CREATE TABLE</em>.
+      </p>
     </div>
 
     <div class="tracks-grid">
@@ -559,9 +597,9 @@
       <div class="track-card">
         <div class="track-header">
           <div class="track-num">Tema 1</div>
-          <h2 class="track-title">01. Diseño Conceptual: Diagrama Entidad-Relación (DER) y Claves</h2>
+          <h2 class="track-title">01. Diseño Conceptual: Diagrama Entidad-Relación y Claves</h2>
         </div>
-        <p class="track-summary">Herramienta visual para modelado de la realidad. Diferencia entre Entidades y Atributos. Concepto indispensable de Clave Primaria (PK) y Clave Foránea (FK).</p>
+        <p class="track-summary">Herramienta visual para modelar la realidad. Diferencia entre Entidades y Atributos. Concepto indispensable de Clave Primaria (PK) y Clave Foránea (FK).</p>
         <div class="bullets">
           <span class="bullet-tag">DER</span>
           <span class="bullet-tag">Entidades</span>
@@ -581,9 +619,9 @@
       <div class="track-card">
         <div class="track-header">
           <div class="track-num">Tema 2</div>
-          <h2 class="track-title">02. Relaciones, Cardinalidades y Resolución de Muchos a Muchos</h2>
+          <h2 class="track-title">02. Relaciones, Cardinalidades y Resolución de N:M</h2>
         </div>
-        <p class="track-summary">Definición de cardinalidad. Casos 1:1 y 1:N. Solución al problema de las relaciones Muchos a Muchos (N:M): creación de tablas intermedias / entidades asociativas.</p>
+        <p class="track-summary">Definición de cardinalidad (1:1 y 1:N). Solución al problema de las relaciones Muchos a Muchos (N:M) mediante la creación de tablas intermedias asociativas.</p>
         <div class="bullets">
           <span class="bullet-tag">Cardinalidad 1:1</span>
           <span class="bullet-tag">Cardinalidad 1:N</span>
@@ -604,7 +642,7 @@
           <div class="track-num">Tema 3</div>
           <h2 class="track-title">03. Proceso de Normalización (1FN, 2FN, 3FN)</h2>
         </div>
-        <p class="track-summary">Objetivos de la normalización. 1FN (Principio de Atomicidad). 2FN (Eliminación de dependencias funcionales parciales en PK compuesta). 3FN (Eliminación de dependencias transitivas).</p>
+        <p class="track-summary">Objetivos de la normalización. 1FN (Principio de Atomicidad), 2FN (Eliminación de dependencias parciales en PK compuesta) y 3FN (Eliminación de dependencias transitivas).</p>
         <div class="bullets">
           <span class="bullet-tag">Redundancia</span>
           <span class="bullet-tag">1FN - Atomicidad</span>
@@ -625,7 +663,7 @@
           <div class="track-num">Tema 4</div>
           <h2 class="track-title">04. Introducción a SQL: Familias DDL y DML</h2>
         </div>
-        <p class="track-summary">Qué es SQL. Diferenciación estricta entre DDL (CREATE, ALTER, DROP, TRUNCATE) para estructura, y DML (SELECT, INSERT, UPDATE, DELETE) para datos.</p>
+        <p class="track-summary">Qué es SQL. Diferenciación estricta entre DDL (CREATE, ALTER, DROP, TRUNCATE) para definir estructuras vs DML (SELECT, INSERT, UPDATE, DELETE) para operar sobre los datos.</p>
         <div class="bullets">
           <span class="bullet-tag">SQL</span>
           <span class="bullet-tag">DDL (Data Definition)</span>
@@ -645,9 +683,9 @@
       <div class="track-card">
         <div class="track-header">
           <div class="track-num">Tema 5</div>
-          <h2 class="track-title">05. Tipos de Datos en SQL, Sintaxis CREATE TABLE y Tip de Oro</h2>
+          <h2 class="track-title">05. Tipos de Datos, Sintaxis CREATE TABLE y Tip de Oro</h2>
         </div>
-        <p class="track-summary">Explicación de tipos: VARCHAR, DATE, DECIMAL, INT, BOOLEAN. Ejemplo de sintaxis de tabla Alumnos. Técnica lingüística infalible para resolver casos de examen.</p>
+        <p class="track-summary">Tipos comunes: VARCHAR, DATE, DECIMAL, INT, BOOLEAN. Ejemplo de sintaxis CREATE TABLE y técnica de análisis de enunciados para el parcial.</p>
         <div class="bullets">
           <span class="bullet-tag">VARCHAR / DATE</span>
           <span class="bullet-tag">DECIMAL / INT / BOOL</span>
@@ -665,7 +703,7 @@
 
     <footer>
       <p>Material de estudio generado a partir de <strong>Resumen para Parcial de Base de Datos.pdf</strong></p>
-      <p style="margin-top: 0.35rem; font-size: 0.8rem; color: #64748b;">Administración y Gestión de Bases de Datos • Antigravity AI</p>
+      <p style="margin-top: 0.35rem; font-size: 0.8rem; color: #64748b;">Administración y Gestión de Bases de Datos • Resumen de Preparación</p>
     </footer>
   </div>
 
