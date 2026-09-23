@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Guía de Estudio - Administración y Gestión de Bases de Datos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0e17;
+      --bg-card: rgba(18, 24, 38, 0.75);
+      --bg-card-hover: rgba(26, 35, 56, 0.85);
+      --border-color: rgba(99, 102, 241, 0.2);
+      --border-active: #6366f1;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.35);
+      --accent-secondary: #06b6d4;
+      --success: #10b981;
+      --tag-bg: rgba(99, 102, 241, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at 15% 15%, #131b2e 0%, var(--bg-primary) 65%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 2.5rem 1.5rem;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: #818cf8;
+      padding: 0.35rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.75rem;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* Master Player Bar */
+    .master-controls {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.25rem 1.75rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .speed-selector {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .speed-selector span {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .speed-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .speed-btn:hover {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: var(--accent);
+    }
+
+    .speed-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .tips-box {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(6, 182, 212, 0.08));
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+      display: flex;
+      gap: 0.85rem;
+      align-items: center;
+    }
+
+    .tips-box-icon {
+      font-size: 1.5rem;
+    }
+
+    /* Track List */
+    .tracks-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .track-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--accent), var(--accent-secondary));
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+
+    .track-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(99, 102, 241, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6);
+    }
+
+    .track-card.featured {
+      border-color: rgba(6, 182, 212, 0.4);
+      background: linear-gradient(135deg, rgba(18, 24, 38, 0.85), rgba(15, 30, 50, 0.85));
+    }
+
+    .track-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.85rem;
+      gap: 1rem;
+    }
+
+    .track-meta {
+      flex: 1;
+    }
+
+    .track-num {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-secondary);
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .track-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .track-summary {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+
+    .bullets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .bullet-tag {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.8rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      color: #cbd5e1;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Audio Element Styling */
+    .audio-wrapper {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    audio {
+      width: 100%;
+      height: 42px;
+      outline: none;
+      filter: invert(0.9) hue-rotate(180deg);
+    }
+
+    .download-link {
+      color: var(--accent-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+
+    .download-link:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3.5rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">Audio-Guía de Repaso</div>
+      <h1>Administración y Gestión de BD</h1>
+      <p class="subtitle">Audios narrados con voz profesional (Álvaro Neural) para escuchar y preparar el Primer Parcial.</p>
+    </header>
+
+    <div class="master-controls">
+      <div>
+        <strong style="color: #fff; display: block; font-size: 1rem;">Controlador de Velocidad de Estudio</strong>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">Ajusta la velocidad de reproducción de todos los audios simultáneamente</span>
+      </div>
+      <div class="speed-selector">
+        <span>Velocidad:</span>
+        <button class="speed-btn active" onclick="setGlobalSpeed(1.0)">1.0x</button>
+        <button class="speed-btn" onclick="setGlobalSpeed(1.25)">1.25x</button>
+        <button class="speed-btn" onclick="setGlobalSpeed(1.5)">1.5x</button>
+        <button class="speed-btn" onclick="setGlobalSpeed(1.75)">1.75x</button>
+      </div>
+    </div>
+
+    <div class="tips-box">
+      <div class="tips-box-icon">💡</div>
+      <div>
+        <strong>Tip para el examen:</strong> Puedes escuchar el <em>Repaso Completo</em> para fijar los conceptos generales de corrido, o escuchar cada tema específico para profundizar en <em>Normalización</em>, <em>Cardinalidades N:M</em> y sintaxis <em>CREATE TABLE</em>.
+      </div>
+    </div>
+
+    <div class="tracks-grid">
+      <!-- Full Track -->
+      <div class="track-card featured">
+        <div class="track-header">
+          <div class="track-meta">
+            <div class="track-num">Audio Especial • Repaso Continuo</div>
+            <h2 class="track-title">00. Repaso Completo del Parcial (Todo en Uno)</h2>
+          </div>
+        </div>
+        <p class="track-summary">Recorrido integral por todos los temas del resumen: DER, Entidades y Atributos, Claves PK y FK, Cardinalidades, Resolución de N:M, 1FN, 2FN, 3FN, comandos DDL vs DML, Tipos de Datos y Tips de Examen.</p>
+        <div class="bullets">
+          <span class="bullet-tag">DER Completo</span>
+          <span class="bullet-tag">Claves PK/FK</span>
+          <span class="bullet-tag">1FN-2FN-3FN</span>
+          <span class="bullet-tag">DDL & DML</span>
+          <span class="bullet-tag">Tip Examen</span>
+        </div>
+        <div class="audio-wrapper">
+          <audio controls preload="metadata">
+            <source src="audios_estudio/00_Resumen_Completo_Repaso_Total_Parcial.mp3" type="audio/mpeg">
+            Tu navegador no soporta el elemento de audio.
+          </audio>
+          <a class="download-link" href="audios_estudio/00_Resumen_Completo_Repaso_Total_Parcial.mp3" download>Descargar</a>
+        </div>
+      </div>
+
+      <!-- Track 1 -->
+      <div class="track-card">
+        <div class="track-header">
+          <div class="track-meta">
+            <div class="track-num">Tema 1</div>
+            <h2 class="track-title">01. Diseño Conceptual: Diagrama Entidad-Relación (DER) y Claves</h2>
+          </div>
+        </div>
+        <p class="track-summary">Herramienta visual para modelado de la realidad. Diferencia entre Entidades y Atributos. Concepto indispensable de Clave Primaria (PK) y Clave Foránea (FK).</p>
+        <div class="bullets">
+          <span class="bullet-tag">DER</span>
+          <span class="bullet-tag">Entidades</span>
+          <span class="bullet-tag">Atributos</span>
+          <span class="bullet-tag">Primary Key (PK)</span>
+          <span class="bullet-tag">Foreign Key (FK)</span>
+        </div>
+        <div class="audio-wrapper">
+          <audio controls preload="metadata">
+            <source src="audios_estudio/01_Diseno_Conceptual_DER_y_Claves.mp3" type="audio/mpeg">
+          </audio>
+          <a class="download-link" href="audios_estudio/01_Diseno_Conceptual_DER_y_Claves.mp3" download>Descargar</a>
+        </div>
+      </div>
+
+      <!-- Track 2 -->
+      <div class="track-card">
+        <div class="track-header">
+          <div class="track-meta">
+            <div class="track-num">Tema 2</div>
+            <h2 class="track-title">02. Relaciones, Cardinalidades y Resolución de Muchos a Muchos</h2>
+          </div>
+        </div>
+        <p class="track-summary">Definición de cardinalidad. Casos 1:1 y 1:N. Solución al problema de las relaciones Muchos a Muchos (N:M): creación de tablas intermedias / entidades asociativas.</p>
+        <div class="bullets">
+          <span class="bullet-tag">Cardinalidad 1:1</span>
+          <span class="bullet-tag">Cardinalidad 1:N</span>
+          <span class="bullet-tag">Relaciones N:M</span>
+          <span class="bullet-tag">Tabla Intermedia</span>
+        </div>
+        <div class="audio-wrapper">
+          <audio controls preload="metadata">
+            <source src="audios_estudio/02_Relaciones_y_Cardinalidades.mp3" type="audio/mpeg">
+          </audio>
+          <a class="download-link" href="audios_estudio/02_Relaciones_y_Cardinalidades.mp3" download>Descargar</a>
+        </div>
+      </div>
+
+      <!-- Track 3 -->
+      <div class="track-card">
+        <div class="track-header">
+          <div class="track-meta">
+            <div class="track-num">Tema 3</div>
+            <h2 class="track-title">03. Proceso de Normalización (1FN, 2FN, 3FN)</h2>
+          </div>
+        </div>
+        <p class="track-summary">Objetivos de la normalización. 1FN (Principio de Atomicidad). 2FN (Eliminación de dependencias funcionales parciales en PK compuesta). 3FN (Eliminación de dependencias transitivas).</p>
+        <div class="bullets">
+          <span class="bullet-tag">Redundancia</span>
+          <span class="bullet-tag">1FN - Atomicidad</span>
+          <span class="bullet-tag">2FN - Dep. Parciales</span>
+          <span class="bullet-tag">3FN - Dep. Transitivas</span>
+        </div>
+        <div class="audio-wrapper">
+          <audio controls preload="metadata">
+            <source src="audios_estudio/03_Proceso_de_Normalizacion_1FN_2FN_3FN.mp3" type="audio/mpeg">
+          </audio>
+          <a class="download-link" href="audios_estudio/03_Proceso_de_Normalizacion_1FN_2FN_3FN.mp3" download>Descargar</a>
+        </div>
+      </div>
+
+      <!-- Track 4 -->
+      <div class="track-card">
+        <div class="track-header">
+          <div class="track-meta">
+            <div class="track-num">Tema 4</div>
+            <h2 class="track-title">04. Introducción a SQL: Familias DDL y DML</h2>
+          </div>
+        </div>
+        <p class="track-summary">Qué es SQL. Diferenciación estricta entre DDL (CREATE, ALTER, DROP, TRUNCATE) para estructura, y DML (SELECT, INSERT, UPDATE, DELETE) para datos.</p>
+        <div class="bullets">
+          <span class="bullet-tag">SQL</span>
+          <span class="bullet-tag">DDL (Data Definition)</span>
+          <span class="bullet-tag">DML (Data Manipulation)</span>
+          <span class="bullet-tag">CREATE / DROP</span>
+          <span class="bullet-tag">SELECT / INSERT</span>
+        </div>
+        <div class="audio-wrapper">
+          <audio controls preload="metadata">
+            <source src="audios_estudio/04_Introduccion_a_SQL_DDL_y_DML.mp3" type="audio/mpeg">
+          </audio>
+          <a class="download-link" href="audios_estudio/04_Introduccion_a_SQL_DDL_y_DML.mp3" download>Descargar</a>
+        </div>
+      </div>
+
+      <!-- Track 5 -->
+      <div class="track-card">
+        <div class="track-header">
+          <div class="track-meta">
+            <div class="track-num">Tema 5</div>
+            <h2 class="track-title">05. Tipos de Datos en SQL, Sintaxis CREATE TABLE y Tip de Oro</h2>
+          </div>
+        </div>
+        <p class="track-summary">Explicación de tipos: VARCHAR, DATE, DECIMAL, INT, BOOLEAN. Ejemplo de sintaxis de tabla Alumnos. Técnica lingüística infalible para resolver casos de examen.</p>
+        <div class="bullets">
+          <span class="bullet-tag">VARCHAR / DATE</span>
+          <span class="bullet-tag">DECIMAL / INT / BOOL</span>
+          <span class="bullet-tag">CREATE TABLE</span>
+          <span class="bullet-tag">Estrategia Parcial</span>
+        </div>
+        <div class="audio-wrapper">
+          <audio controls preload="metadata">
+            <source src="audios_estudio/05_Tipos_de_Datos_y_Sintaxis_CREATE_TABLE.mp3" type="audio/mpeg">
+          </audio>
+          <a class="download-link" href="audios_estudio/05_Tipos_de_Datos_y_Sintaxis_CREATE_TABLE.mp3" download>Descargar</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Material de estudio generado a partir de <strong>Resumen para Parcial de Base de Datos.pdf</strong></p>
+      <p style="margin-top: 0.35rem; font-size: 0.8rem; color: #64748b;">Administración y Gestión de Bases de Datos • Antigravity AI</p>
+    </footer>
+  </div>
+
+  <script>
+    let currentSpeed = 1.0;
+
+    function setGlobalSpeed(speed) {
+      currentSpeed = speed;
+      const audios = document.querySelectorAll('audio');
+      audios.forEach(audio => {
+        audio.playbackRate = speed;
+      });
+
+      document.querySelectorAll('.speed-btn').forEach(btn => {
+        if (parseFloat(btn.innerText) === speed) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    // Auto-pause others when one starts playing
+    document.querySelectorAll('audio').forEach(audio => {
+      audio.addEventListener('play', (e) => {
+        audio.playbackRate = currentSpeed;
+        document.querySelectorAll('audio').forEach(other => {
+          if (other !== audio) {
+            other.pause();
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

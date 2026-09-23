@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+*.pyc
+reproductor_estudio_autocontenido.html
+Audios_Resumen_Base_de_Datos.zip
